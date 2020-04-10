@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { StatusBar, StyleSheet, Image  } from 'react-native'
+import { StatusBar, StyleSheet, Image , Row } from 'react-native'
 import { Root, Container, Content, Header, Body, Text, Icon } from "native-base";
 import { customDrawerContent } from './src/components/CustomDrawerContent'
 import Logout from './src/components/Logout'
@@ -9,8 +9,11 @@ import Signup from './src/view/Signup';
 import Try1 from './src/view/try'
 import Verify from './src/view/Verify';
 import Phone from './src/view/PhoneVerify';
+//import AffanProfile from './src/view/affanProfile'
 import Home from './src/view/Home'
-import Profile from './src/components/profileTab'
+import About from './src/view/profileAbout1'
+import Profile from './src/view/profile1'
+import AffanProfile from './src/components/profileTab'
 import NoInternet from './src/view/NoInternet';
 import Category from './src/view/subCategory'
 import Survey from './src/view/Survey'
@@ -19,11 +22,13 @@ import SurveyDetails from './src/view/SurveyDetails'
 import Password from './src/view/forgotPassword'
 import Referal from './src/view/Referal'
 import Tab from './src/components/Tab'
+import { createBottomTabNavigator } from 'react-navigation-tabs';
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createDrawerNavigator, DrawerItems } from 'react-navigation-drawer'
 import OneSignal from 'react-native-onesignal'
 import { View } from "react-native-animatable";
+
 
 const App = () => {
 
@@ -57,8 +62,9 @@ const App = () => {
 
   return (
     <Root>
-      <StatusBar backgroundColor="#333333" barStyle="default" />
+      <StatusBar backgroundColor="#39ccd4" barStyle="default" />
       <AppContainer />
+      {/* <Verify/> */}
       </Root>
 
     // <View>
@@ -85,9 +91,20 @@ const AppNavigator = createStackNavigator({
 
 
  const Verification = createStackNavigator({
+  
   Verify: {
     screen: Verify,
+  },
+  Profile:{
+    screen:Profile
+  },
+  About:{
+    screen:About
+  },
+  Phone:{
+    screen: Phone
   }
+
 },
 {
   headerMode: 'none',
@@ -137,13 +154,14 @@ const AppNavigator = createStackNavigator({
   headerMode: 'none',
   navigationOptions: {
     headerVisible: false,
-  }
+  },
+  backgroundColor:"#03fcf8"
   
  });
 
 
  const HomeStack = createStackNavigator({
-  Profile: Profile,
+  AffanProfile:AffanProfile,
   Phone: Phone,
 },
 {
@@ -155,48 +173,113 @@ const AppNavigator = createStackNavigator({
  });
  
 
- const drawerNavigator = createDrawerNavigator({
-   Home:{
-     screen: Sur,
-     navigationOptions:{
-       drawerIcon:(
-        <Icon style={{ color:'#333333', fontSize:20}} name='home'/>
+//  const drawerNavigator = createDrawerNavigator({
+//    Home:{
+//      screen: Sur,
+//      navigationOptions:{
+//        drawerIcon:(
+//         <Icon style={{ color:'#333333', fontSize:20}} name='home'/>
+//        )
+//      }
+//    },
+//    Profile:{
+//     screen: HomeStack,
+//     navigationOptions:{
+//       drawerIcon:(
+//        <Icon style={{ color:'#333333', fontSize:20}} name='contact'/>
+//       )
+//     }
+//   },
+//   Referral:{
+//     screen: Referal,
+//     navigationOptions: {
+//       drawerIcon:(
+//         <Icon style={{ color:'#333333', fontSize:20}} name='send' />
+//       )
+//     }
+//   },
+//    Logout:{
+//     screen: Logout,
+//     navigationOptions:{
+//       drawerIcon:(
+//        <Icon style={{ color:'#333333', fontSize:20}} name='home'/>
+//       )
+//     }
+//   }
+//  },
+// {
+//   initialRouteName: 'Home',
+//   drawerPosition:'left',
+//   contentComponent: customDrawerContent,
+//   drawerOpenRoute: 'DrawerOpen',
+//   drawerCloseRoute: 'DrawerClose',
+//   drawerToggleRoute: 'DrawerToggle'
+// })
+
+const drawerNavigator = createBottomTabNavigator({
+  //createDrawerNavigator({
+    Home:{
+      screen: Sur,
+      navigationOptions: {
+       tabBarLabel:"Home Page",
+ 
+       tabBarIcon: ({ tintColor }) => (
+         <Icon style={{color:"black"}}  name="home" size={75}/>
        )
+     },
+    },
+    Profile:{
+     screen: HomeStack,
+     navigationOptions: {
+      tabBarLabel:"profile",
+
+      tabBarIcon: ({ tintColor }) => (
+        <Icon style={{color:"black"}} name="person" size={75}/>
+      )
+    },
+   },
+   Referral:{
+     screen: Referal,
+     navigationOptions: {
+      tabBarLabel:"Referral",
+
+      tabBarIcon: ({ tintColor }) => (
+        <Icon  style={{color:"black"}} name="send" size={75}/>
+      )
+    },
+   },
+    Logout:{
+     screen: Logout,
+     navigationOptions: {
+      tabBarLabel:"LOGOUT",
+      fontSize:120,
+
+      tabBarIcon: ({ tintColor }) => (
+        <Icon  style={{color:"black"}} name="md-log-out" size={75}/>
+      )
+    },
+   }
+  },
+ // 
+ {
+   
+   tabBarOptions: {
+     activeTintColor: 'black',
+     inactiveTintColor: 'black',
+     activeBackgroundColor:"#03fcf8",
+     activeFontSize:70,
+     activeIconColor:"blue",
+     showIcon: true ,
+     style: {
+       backgroundColor: 'white',
+       borderWidth:2,
+       
+       
      }
    },
-   Profile:{
-    screen: HomeStack,
-    navigationOptions:{
-      drawerIcon:(
-       <Icon style={{ color:'#333333', fontSize:20}} name='contact'/>
-      )
-    }
-  },
-  Referral:{
-    screen: Referal,
-    navigationOptions: {
-      drawerIcon:(
-        <Icon style={{ color:'#333333', fontSize:20}} name='send' />
-      )
-    }
-  },
-   Logout:{
-    screen: Logout,
-    navigationOptions:{
-      drawerIcon:(
-       <Icon style={{ color:'#333333', fontSize:20}} name='home'/>
-      )
-    }
-  }
+  // tabBarOptions: { activeTintColor:'blue', },
  },
-{
-  initialRouteName: 'Home',
-  drawerPosition:'left',
-  contentComponent: customDrawerContent,
-  drawerOpenRoute: 'DrawerOpen',
-  drawerCloseRoute: 'DrawerClose',
-  drawerToggleRoute: 'DrawerToggle'
-})
+ )
 
  const switchNavigator = createSwitchNavigator({
    Splash:{
@@ -209,13 +292,16 @@ const AppNavigator = createStackNavigator({
    Ver: Verification,
    pass:forgotPassword,
    App: drawerNavigator,
+  
  },
  {
    initialRouteName:'Splash'
  }
  )
 
-const AppContainer = createAppContainer(switchNavigator)
+
+ //const AppContainer = createAppContainer( Verification)
+ const AppContainer = createAppContainer(switchNavigator)
 
 export default App;
 
@@ -225,3 +311,23 @@ const styles = StyleSheet.create({
     height:150
   }
 })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
