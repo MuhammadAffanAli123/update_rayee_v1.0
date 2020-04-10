@@ -1,0 +1,46 @@
+import * as React from 'react';
+import { Text, View, StyleSheet, Button } from 'react-native';
+export default class Profile1 extends React.Component {
+  getTextValue = () => {
+    console.log(this.textRef._children);
+    var a=this.textRef._children
+    var b=this.textRef1._children
+    var c=this.textRef2._children
+    var d=this.textRef3._children
+    console.log(a ,  "ok b" , b)
+    if(a == false && b == false && c == false && d == false ){
+        console.log("data nhi ha bhai")
+    }
+    else{   
+       console.log("ok ha bhai")
+    }
+  };
+  render() {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.paragraph} ref={node => (this.textRef = node)}>
+      
+        </Text>
+        <Text style={styles.paragraph} ref={node => (this.textRef1 = node)}>
+        
+        </Text>
+        <Button title="Get value" onPress={this.getTextValue} />
+      </View>
+    );
+  }
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    backgroundColor: '#ecf0f1',
+    padding: 8,
+  },
+  paragraph: {
+    margin: 24,
+    fontSize: 18,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+});
